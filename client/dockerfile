@@ -1,7 +1,6 @@
 FROM node:14-apline as build
-WORKDIR /app
-COPY package*.json ./
 RUN npm install
-COPY . .
+RUN mkdir -p /home/app
 RUN npm run build
-
+COPY . /home/app
+CMD ["node", "index.js"]
