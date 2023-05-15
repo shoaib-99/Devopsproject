@@ -26,7 +26,7 @@ jobs:
         with:
           context: ./client
           push: true
-          tags: shoaib789/devopsproject-005
+          tags: shoaib789/client
 
       - name: log in docker
         uses: docker/login-action@v1
@@ -39,4 +39,4 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: shoaib789/devopsproject-005
+          tags: shoaib789/server
