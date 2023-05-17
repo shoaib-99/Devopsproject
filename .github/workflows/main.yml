@@ -50,6 +50,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./server
+          context: ./nginx
           push: true
           tags: shoaib789/nginx
