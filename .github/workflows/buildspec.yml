@@ -7,7 +7,7 @@ phases:
      - echo Logging in to Amazon ECR...
      - aws --version
      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-     - REPOSITORY_URI=877788451457.dkr.ecr.ap-south-1.amazonaws.com/nodeapp-javahome
+     - REPOSITORY_URI=014960577773.dkr.ecr.us-east-1.amazonaws.com/aws-ecs-devops-project
      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
      - IMAGE_TAG-build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
 build:
@@ -23,7 +23,7 @@ post build:
      - docker push $REPOSITORY_URI:latest
      - docker push $REPOSITORY_URI:$IMAGE_TAG 
      - echo Writing image definitions file...
-     - printf '[{"name":"nodeapp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+     - printf '[{"name":"DevopsProject","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
      - cat imagedefinitions.json
   artifacts:
       files: imagedefinition.json
