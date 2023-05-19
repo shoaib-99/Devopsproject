@@ -25,7 +25,7 @@ post build:
      - echo Writing image definitions file...
      - printf '[{"name":"nodeapp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
      - cat imagedefinitions.json
-   artifacts:
+  artifacts:
       files: imagedefinition.json
             
 
