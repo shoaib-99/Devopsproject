@@ -29,7 +29,7 @@ phases:
   build:
     commands:
         - echo Build started on 'date'
-        - cd nginx
+        - cd server
         - echo Building the Docker image...
         - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG2 .
         - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG2 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG2
@@ -50,7 +50,7 @@ phases:
   build:
     commands:
         - echo Build started on 'date'
-        - cd nginx
+        - cd client
         - echo Building the Docker image...
         - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG3 .
         - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG3 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG3
