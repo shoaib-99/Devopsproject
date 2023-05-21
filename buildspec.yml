@@ -9,9 +9,17 @@ phases:
     commands:
         - echo Build started on 'date'
         - cd nginx
-        - echo Building the Docker image...
+        - echo Building the Docker images...
         - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG1 .
         - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG1 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG1
+        - cd ..
+        - cd server
+        - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG2 .
+        - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG2 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG2
+        - cd ..
+        - cd client
+        - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG3 .
+        - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG3 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG3
   post_build:
     commands:
         - echo Build completed on 'date'
@@ -19,41 +27,9 @@ phases:
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG1
         - echo Writing image definitions file ...
         - printf '[{"name":"NGINXCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG1 > imagedefinition.json
-      
-  pre_build:
-    commands:
-        - echo Logging in to Amazon ECR...
-        - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-  build:
-    commands:
-        - echo Build started on 'date'
-        - cd server
-        - echo Building the Docker image...
-        - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG2 .
-        - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG2 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG2
-  post_build:
-    commands:
-        - echo Build completed on 'date'
-        - echo Pushing the Docker image...
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG2
         - echo Writing image definitions file ...
         - printf '[{"name":"SERVERCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG2 > imagedefinition.json
-      
-  pre_build:
-    commands:
-        - echo Logging in to Amazon ECR...
-        - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-  build:
-    commands:
-        - echo Build started on 'date'
-        - cd client
-        - echo Building the Docker image...
-        - docker build -t $IMAGE_REPO_NAME:$IMAGE_TAG3 .
-        - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG3 $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG3
-  post_build:
-    commands:
-        - echo Build completed on 'date'
-        - echo Pushing the Docker image...
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG3
         - echo Writing image definitions file ...
         - printf '[{"name":"CLIENTCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG3 > imagedefinition.json
