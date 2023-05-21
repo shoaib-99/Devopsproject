@@ -19,8 +19,6 @@ phases:
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG1
         - echo Writing image definitions file ...
         - printf '[{"name":"NGINXCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG1 > imagedefinition.json
-  artifacts:
-      files: imagedefinition.json
       
   pre_build:
     commands:
@@ -40,8 +38,6 @@ phases:
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG2
         - echo Writing image definitions file ...
         - printf '[{"name":"SERVERCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG2 > imagedefinition.json
-  artifacts:
-      files: imagedefinition.json
       
   pre_build:
     commands:
