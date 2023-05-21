@@ -33,8 +33,8 @@ phases:
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG3
         - echo Writing image definitions file ...
         - printf '[{"name":"CLIENTCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG3 > imagedefinitions-client.json
-  artifacts:
-      files: 
+artifacts:
+    files: 
         - imagedefinitions-nginx.json 
         - imagedefinitions-server.json
         - imagedefinitions-client.json
