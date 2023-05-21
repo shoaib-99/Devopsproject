@@ -26,14 +26,17 @@ phases:
         - echo Pushing the Docker image...
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG1
         - echo Writing image definitions file ...
-        - printf '[{"name":"NGINXCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG1 > imagedefinition.json
+        - printf '[{"name":"NGINXCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG1 > imagedefinitions-nginx.json
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG2
         - echo Writing image definitions file ...
-        - printf '[{"name":"SERVERCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG2 > imagedefinition.json
+        - printf '[{"name":"SERVERCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG2 > imagedefinitions-server.json
         - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG3
         - echo Writing image definitions file ...
-        - printf '[{"name":"CLIENTCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG3 > imagedefinition.json
+        - printf '[{"name":"CLIENTCONTAINER","imageUri":"%s"}]'  $IMAGE_REPO_NAME:$IMAGE_TAG3 > imagedefinitions-client.json
   artifacts:
-      files: imagedefinition.json    
+      files: 
+        - imagedefinitions-nginx.json 
+        - imagedefinitions-server.json
+        - imagedefinitions-client.json
       
       
