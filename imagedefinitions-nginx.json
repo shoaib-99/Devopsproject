@@ -1,0 +1,6 @@
+[
+  {
+    "name": "nginx",
+    "imageUri": "014960577773.dkr.ecr.us-east-1.amazonaws.com/aws-ecs-devops-project:nginx"
+  }
+  ]
